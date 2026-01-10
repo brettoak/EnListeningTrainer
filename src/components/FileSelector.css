@@ -1,0 +1,16 @@
+.file-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.file-name {
+  color: var(--primary-color);
+  font-weight: 500;
+  font-size: 1.1rem;
+  background: #e3f2fd;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  margin-top: 0.5rem;
+}

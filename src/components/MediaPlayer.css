@@ -1,0 +1,28 @@
+.media-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+}
+
+.media-video {
+  border: 3px solid var(--primary-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  background: black;
+  max-width: 100%;
+  max-height: 50vh;
+  width: 600px;
+}
+
+.media-audio {
+  width: 100%;
+  max-width: 500px;
+}
+
+.media-placeholder {
+  color: var(--text-secondary);
+  font-style: italic;
+  margin: 2rem;
+}
