@@ -33,16 +33,18 @@ export const MediaPlayer = forwardRef<HTMLMediaElement, MediaPlayerProps>(({
     onEnded,
     controls: false,
     className: isVideo
-      ? 'border-[3px] border-[#646cff] rounded-lg shadow-lg bg-black max-w-full max-h-[50vh] w-[600px]'
-      : 'w-full max-w-[500px]'
+      ? 'w-full rounded-lg shadow-sm bg-black aspect-video object-contain'
+      : 'w-full max-w-[600px] mx-auto'
   };
 
   return (
-    <div className="flex justify-center items-center w-full p-4">
+    <div className="w-full bg-black/5 flex justify-center items-center p-0">
       {isVideo ? (
         <video {...commonProps} />
       ) : (
-        <audio {...commonProps} />
+        <div className="p-8 w-full flex justify-center">
+          <audio {...commonProps} className="w-full" controls />
+        </div>
       )}
     </div>
   );

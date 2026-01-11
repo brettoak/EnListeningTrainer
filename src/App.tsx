@@ -91,27 +91,26 @@ function App() {
   };
 
   return (
-    <div className="max-w-[1400px] mx-auto p-4 min-h-screen flex flex-col">
-      <header className="flex justify-center items-center gap-8 flex-wrap mb-4">
-        <FileSelector onFileSelect={handleFileSelect} selectedFileName={selectedFileName} />
-        <StudyTimer />
+    <div className="max-w-[1000px] mx-auto p-6 min-h-screen flex flex-col font-sans">
+      <header className="flex justify-between items-center mb-8 bg-white p-4 rounded-xl shadow-sm border border-slate-100">
+        <h1 className="text-xl font-bold text-slate-700 hidden md:block">Listening Trainer</h1>
+        <div className="flex gap-4 items-center flex-wrap justify-end flex-1">
+          <FileSelector onFileSelect={handleFileSelect} selectedFileName={selectedFileName} />
+          <StudyTimer />
+        </div>
       </header>
 
-      <main className="flex-1 flex flex-col gap-4">
-        <MediaPlayer
-          ref={mediaRef}
-          file={file}
-          onTimeUpdate={(t) => setCurrentTime(t)}
-          onDurationChange={setDuration}
-          onEnded={() => setIsPlaying(false)}
-        />
+      <main className="flex-1 flex flex-col gap-6">
+        <div className="flex flex-col gap-0 rounded-2xl overflow-hidden shadow-lg bg-black/5 border border-slate-200">
+          <MediaPlayer
+            ref={mediaRef}
+            file={file}
+            onTimeUpdate={(t) => setCurrentTime(t)}
+            onDurationChange={setDuration}
+            onEnded={() => setIsPlaying(false)}
+          />
 
-        <div className="flex flex-col md:flex-row gap-8 items-center md:items-start mt-4">
-          <div className="flex-1 w-full">
-            <NoteEditor lastFileName={selectedFileName || undefined} />
-          </div>
-
-          <div className="w-full md:w-[100px] md:sticky md:top-4 order-first md:order-last">
+          <div className="bg-white border-t border-slate-100 p-4">
             <Controls
               isPlaying={isPlaying}
               currentTime={currentTime}
@@ -123,9 +122,13 @@ function App() {
             />
           </div>
         </div>
+
+        <div className="w-full">
+          <NoteEditor lastFileName={selectedFileName || undefined} />
+        </div>
       </main>
 
-      <footer className="text-center mt-8 text-white/60 text-sm">
+      <footer className="text-center mt-12 mb-6 text-slate-400 text-sm">
         copyright © 2026 English Intensive Listening Tool All Rights Reserved
       </footer>
     </div>

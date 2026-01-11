@@ -131,31 +131,41 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ lastFileName }) => {
   };
 
   return (
-    <div className="w-full max-w-full flex justify-center">
-      <div className="bg-white rounded-lg shadow-md p-8 w-full flex flex-col h-[700px] relative text-gray-800">
+    <div className="w-full">
+      <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex flex-col h-[700px] relative text-gray-800">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-lg font-bold text-slate-700">Notes</h2>
+          <div className="flex gap-2">
+            <button
+              className="px-4 py-2 text-sm rounded bg-slate-50 text-slate-600 font-medium hover:bg-slate-100 transition-colors border border-slate-200"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              Import
+            </button>
+            <button
+              className="px-4 py-2 text-sm rounded bg-[#646cff] text-white font-medium shadow-sm hover:bg-[#535bf2] transition-colors"
+              onClick={handleDownload}
+            >
+              Download & Clear
+            </button>
+            <input
+              type="file"
+              accept=".html,text/html"
+              style={{ display: 'none' }}
+              ref={fileInputRef}
+              onChange={handleImport}
+            />
+          </div>
+        </div>
+
         <ReactQuill
           theme="snow"
           value={value}
           onChange={handleChange}
           modules={modules}
           ref={quillRef}
-          className="h-[550px] mb-8"
+          className="flex-1 mb-0 flex flex-col [&_.ql-container]:flex-1 [&_.ql-container]:border-slate-200 [&_.ql-toolbar]:border-slate-200 [&_.ql-toolbar]:bg-slate-50 [&_.ql-toolbar]:rounded-t-lg [&_.ql-container]:rounded-b-lg"
         />
-        <div className="flex justify-end gap-4 mt-auto">
-          <input
-            type="file"
-            accept=".html,text/html"
-            style={{ display: 'none' }}
-            ref={fileInputRef}
-            onChange={handleImport}
-          />
-          <button className="px-6 py-3 rounded-md bg-transparent border-2 border-[#646cff] text-[#646cff] font-medium hover:bg-[#f0f7ff] transition-colors shadow-sm" onClick={() => fileInputRef.current?.click()}>
-            Import Notes
-          </button>
-          <button className="px-6 py-3 rounded-md bg-[#646cff] text-white font-medium shadow-sm hover:bg-[#535bf2] transition-colors hover:shadow-md" onClick={handleDownload}>
-            Download Notes and Clear
-          </button>
-        </div>
       </div>
     </div>
   );
