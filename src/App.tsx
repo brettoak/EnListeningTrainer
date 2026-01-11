@@ -4,7 +4,7 @@ import { StudyTimer } from './components/StudyTimer';
 import { MediaPlayer } from './components/MediaPlayer';
 import { Controls } from './components/Controls';
 import { NoteEditor } from './components/NoteEditor';
-import './App.css';
+// import './App.css'; // Removed for Tailwind migration
 
 function App() {
   const [file, setFile] = useState<File | null>(null);
@@ -12,7 +12,7 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  
+
   const mediaRef = useRef<HTMLMediaElement>(null);
 
   // Load last file (stub for now, as File object persistence is tricky in web/electron strict)
@@ -25,7 +25,7 @@ function App() {
   // In Electron we can use node fs. 
   // But let's stick to the File object from input for now to match Web API, 
   // unless we upgrade to using 'electron' remote/ipc for file opening.
-  
+
   useEffect(() => {
     // Keyboard shortcuts
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -45,7 +45,7 @@ function App() {
         e.preventDefault();
       }
     };
-    
+
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isPlaying]);
@@ -91,28 +91,28 @@ function App() {
   };
 
   return (
-    <div className="app-container">
-      <header className="app-header">
+    <div className="max-w-[1400px] mx-auto p-4 min-h-screen flex flex-col">
+      <header className="flex justify-center items-center gap-8 flex-wrap mb-4">
         <FileSelector onFileSelect={handleFileSelect} selectedFileName={selectedFileName} />
         <StudyTimer />
       </header>
-      
-      <main className="app-main">
-        <MediaPlayer 
+
+      <main className="flex-1 flex flex-col gap-4">
+        <MediaPlayer
           ref={mediaRef}
           file={file}
           onTimeUpdate={(t) => setCurrentTime(t)}
           onDurationChange={setDuration}
           onEnded={() => setIsPlaying(false)}
         />
-        
-        <div className="workspace">
-          <div className="editor-section">
+
+        <div className="flex flex-col md:flex-row gap-8 items-center md:items-start mt-4">
+          <div className="flex-1 w-full">
             <NoteEditor lastFileName={selectedFileName || undefined} />
           </div>
-          
-          <div className="controls-section">
-            <Controls 
+
+          <div className="w-full md:w-[100px] md:sticky md:top-4 order-first md:order-last">
+            <Controls
               isPlaying={isPlaying}
               currentTime={currentTime}
               duration={duration}
@@ -124,8 +124,8 @@ function App() {
           </div>
         </div>
       </main>
-      
-      <footer className="app-footer">
+
+      <footer className="text-center mt-8 text-white/60 text-sm">
         copyright © 2026 English Intensive Listening Tool All Rights Reserved
       </footer>
     </div>

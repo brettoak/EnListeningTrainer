@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import './NoteEditor.css';
+// import './NoteEditor.css'; // Removed for Tailwind migration
 
 interface NoteEditorProps {
   lastFileName?: string;
@@ -25,7 +25,7 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ lastFileName }) => {
         // Let's stick to HTML for simplicity if possible, or support Delta.
         // Original logic: quill.setContents(JSON.parse(saved));
         // We will try to load it. If we use uncontrolled component, we can use defaultValue.
-      } catch(e) { /* ignore */ }
+      } catch (e) { /* ignore */ }
     }
     // We'll rely on the editor handling initial content if we passed it?
     // Actually, ReactQuill is controlled or uncontrolled.
@@ -56,26 +56,26 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ lastFileName }) => {
     }, 2000);
     return () => clearTimeout(timer);
   }, [value]);
-  
+
   // Load initial
   useEffect(() => {
-     const saved = localStorage.getItem(LOCAL_KEY);
-     if (saved) {
-       // If it looks like JSON (Delta), we might need to convert?
-       // If it starts with {, it might be delta.
-       if (saved.trim().startsWith('{')) {
-          // It's likely Delta. ReactQuill defaultValue can take it?
-          // Actually, setValue(JSON.parse(saved))? 
-          // Let's just set raw string if it's HTML, or if it's JSON maybe parse it.
-          // For now, assume it's HTML for new app, but try to support old if needed.
-          // If we overwrite, it's fine as per "Rewrite".
-          setValue(saved); // ReactQuill handles HTML string. 
-          // If it was Delta JSON string, ReactQuill might render it as text?
-          // We'll start fresh or assume Import handles it.
-       } else {
-         setValue(saved);
-       }
-     }
+    const saved = localStorage.getItem(LOCAL_KEY);
+    if (saved) {
+      // If it looks like JSON (Delta), we might need to convert?
+      // If it starts with {, it might be delta.
+      if (saved.trim().startsWith('{')) {
+        // It's likely Delta. ReactQuill defaultValue can take it?
+        // Actually, setValue(JSON.parse(saved))? 
+        // Let's just set raw string if it's HTML, or if it's JSON maybe parse it.
+        // For now, assume it's HTML for new app, but try to support old if needed.
+        // If we overwrite, it's fine as per "Rewrite".
+        setValue(saved); // ReactQuill handles HTML string. 
+        // If it was Delta JSON string, ReactQuill might render it as text?
+        // We'll start fresh or assume Import handles it.
+      } else {
+        setValue(saved);
+      }
+    }
   }, []);
 
   const handleDownload = () => {
@@ -83,9 +83,9 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ lastFileName }) => {
     baseName = baseName.replace(/\.[^/.]+$/, '');
     const now = new Date();
     const pad = (n: number) => n.toString().padStart(2, '0');
-    const dateStr = `${now.getFullYear().toString().slice(2)}-${pad(now.getMonth()+1)}-${pad(now.getDate())}-${pad(now.getHours())}-${pad(now.getMinutes())}`;
+    const dateStr = `${now.getFullYear().toString().slice(2)}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}-${pad(now.getHours())}-${pad(now.getMinutes())}`;
     const fileName = `${baseName}-${dateStr}.html`;
-    
+
     const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Notes</title></head><body>${value}</body></html>`;
     const blob = new Blob([html], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
@@ -96,14 +96,14 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ lastFileName }) => {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    
+
     // Clear after download? Original did: localStorage.removeItem(LOCAL_KEY); quill.setText('');
     localStorage.removeItem(LOCAL_KEY);
     setValue('');
   };
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-  
+
   const handleImport = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -115,7 +115,7 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ lastFileName }) => {
       setValue(html);
     };
     reader.readAsText(file);
-    if(fileInputRef.current) fileInputRef.current.value = '';
+    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
   const modules = {
@@ -123,7 +123,7 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ lastFileName }) => {
       [{ 'header': [1, 2, 3, false] }],
       ['bold', 'italic', 'underline', 'strike'],
       [{ 'color': [] }],
-      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
       ['blockquote', 'code-block'],
       ['image'],
       ['clean']
@@ -131,28 +131,28 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ lastFileName }) => {
   };
 
   return (
-    <div className="note-editor-container">
-      <div className="editor-wrapper">
-        <ReactQuill 
-          theme="snow" 
-          value={value} 
+    <div className="w-full max-w-full flex justify-center">
+      <div className="bg-white rounded-lg shadow-md p-8 w-full flex flex-col h-[700px] relative text-gray-800">
+        <ReactQuill
+          theme="snow"
+          value={value}
           onChange={handleChange}
           modules={modules}
           ref={quillRef}
-          className="quill-editor"
+          className="h-[550px] mb-8"
         />
-        <div className="editor-controls">
-          <input 
-            type="file" 
-            accept=".html,text/html" 
-            style={{display:'none'}} 
+        <div className="flex justify-end gap-4 mt-auto">
+          <input
+            type="file"
+            accept=".html,text/html"
+            style={{ display: 'none' }}
             ref={fileInputRef}
             onChange={handleImport}
           />
-          <button className="download-btn outlined" onClick={() => fileInputRef.current?.click()}>
+          <button className="px-6 py-3 rounded-md bg-transparent border-2 border-[#646cff] text-[#646cff] font-medium hover:bg-[#f0f7ff] transition-colors shadow-sm" onClick={() => fileInputRef.current?.click()}>
             Import Notes
           </button>
-          <button className="download-btn" onClick={handleDownload}>
+          <button className="px-6 py-3 rounded-md bg-[#646cff] text-white font-medium shadow-sm hover:bg-[#535bf2] transition-colors hover:shadow-md" onClick={handleDownload}>
             Download Notes and Clear
           </button>
         </div>

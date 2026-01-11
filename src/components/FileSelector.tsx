@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import './FileSelector.css';
+// import './FileSelector.css'; // Removed for Tailwind migration
 
 interface FileSelectorProps {
   onFileSelect: (file: File) => void;
@@ -17,7 +17,7 @@ export const FileSelector: React.FC<FileSelectorProps> = ({ onFileSelect, select
   };
 
   return (
-    <div className="file-selector">
+    <div className="flex flex-col items-center gap-4">
       <input
         type="file"
         ref={fileInputRef}
@@ -25,16 +25,16 @@ export const FileSelector: React.FC<FileSelectorProps> = ({ onFileSelect, select
         accept="audio/*,video/*"
         style={{ display: 'none' }}
       />
-      
-      <button 
-        className="btn-primary"
+
+      <button
+        className="bg-[#646cff] text-white px-4 py-2 rounded font-medium hover:bg-[#535bf2] transition-colors shadow-sm"
         onClick={() => fileInputRef.current?.click()}
       >
         Select Audio/Video File
       </button>
-      
+
       {selectedFileName && (
-        <div className="file-name">
+        <div className="text-[#646cff] font-medium text-lg bg-[#e3f2fd] px-4 py-2 rounded-md mt-2">
           Listening Material: <span>{selectedFileName}</span>
         </div>
       )}

@@ -1,5 +1,5 @@
 import React, { forwardRef, useEffect } from 'react';
-import './MediaPlayer.css';
+// import './MediaPlayer.css'; // Removed for Tailwind migration
 
 interface MediaPlayerProps {
   file: File | null;
@@ -8,11 +8,11 @@ interface MediaPlayerProps {
   onEnded: () => void;
 }
 
-export const MediaPlayer = forwardRef<HTMLMediaElement, MediaPlayerProps>(({ 
-  file, 
-  onTimeUpdate, 
+export const MediaPlayer = forwardRef<HTMLMediaElement, MediaPlayerProps>(({
+  file,
+  onTimeUpdate,
   onDurationChange,
-  onEnded 
+  onEnded
 }, ref) => {
   const isVideo = file?.type.startsWith('video/');
   const src = file ? URL.createObjectURL(file) : undefined;
@@ -23,7 +23,7 @@ export const MediaPlayer = forwardRef<HTMLMediaElement, MediaPlayerProps>(({
     };
   }, [src]);
 
-  if (!file) return <div className="media-placeholder">Select a file to start</div>;
+  if (!file) return <div className="text-gray-500 italic m-8">Select a file to start</div>;
 
   const commonProps = {
     ref: ref as React.Ref<any>,
@@ -32,11 +32,13 @@ export const MediaPlayer = forwardRef<HTMLMediaElement, MediaPlayerProps>(({
     onLoadedMetadata: (e: React.SyntheticEvent<HTMLMediaElement>) => onDurationChange(e.currentTarget.duration),
     onEnded,
     controls: false,
-    className: isVideo ? 'media-video' : 'media-audio'
+    className: isVideo
+      ? 'border-[3px] border-[#646cff] rounded-lg shadow-lg bg-black max-w-full max-h-[50vh] w-[600px]'
+      : 'w-full max-w-[500px]'
   };
 
   return (
-    <div className="media-container">
+    <div className="flex justify-center items-center w-full p-4">
       {isVideo ? (
         <video {...commonProps} />
       ) : (

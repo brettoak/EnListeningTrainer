@@ -1,5 +1,5 @@
 import React from 'react';
-import './Controls.css';
+// import './Controls.css'; // Removed for Tailwind migration
 
 interface ControlsProps {
   isPlaying: boolean;
@@ -34,20 +34,37 @@ export const Controls: React.FC<ControlsProps> = ({
   const playedPercent = duration ? (currentTime / duration) * 100 : 0;
 
   return (
-    <div className="controls-container">
-      <div className="buttons-row">
-        <button className="player-btn" onClick={onRewind} title="Rewind 5 seconds">⏪</button>
-        <button className="player-btn play-pause" onClick={onPlayPause} title="Play / Pause">
+
+    <div className="flex flex-col items-center gap-2 p-4 bg-[#fafbfc] rounded-md text-gray-800">
+      <div className="flex gap-2 mb-2">
+        <button
+          className="bg-[#646cff] text-white border-none rounded-full w-10 h-10 text-lg flex items-center justify-center shadow-sm hover:bg-[#535bf2] hover:scale-110 hover:shadow-md active:scale-95 transition-all outline-none"
+          onClick={onRewind}
+          title="Rewind 5 seconds"
+        >
+          ⏪
+        </button>
+        <button
+          className="bg-[#646cff] text-white border-none rounded-full w-10 h-10 text-lg flex items-center justify-center shadow-sm hover:bg-[#535bf2] hover:scale-110 hover:shadow-md active:scale-95 transition-all outline-none"
+          onClick={onPlayPause}
+          title="Play / Pause"
+        >
           {isPlaying ? '⏸️' : '▶️'}
         </button>
-        <button className="player-btn" onClick={onForward} title="Forward 5 seconds">⏩</button>
+        <button
+          className="bg-[#646cff] text-white border-none rounded-full w-10 h-10 text-lg flex items-center justify-center shadow-sm hover:bg-[#535bf2] hover:scale-110 hover:shadow-md active:scale-95 transition-all outline-none"
+          onClick={onForward}
+          title="Forward 5 seconds"
+        >
+          ⏩
+        </button>
       </div>
 
-      <span className="time-display">{formatTime(currentTime)}</span>
-      
+      <span className="font-mono text-sm text-gray-500">{formatTime(currentTime)}</span>
+
       <input
         type="range"
-        className="progress-bar"
+        className="writing-vertical-lr appearance-none w-8 h-[400px] my-4 bg-transparent cursor-pointer accent-[#646cff]"
         min="0"
         max={duration || 100}
         step="0.1"
@@ -55,8 +72,8 @@ export const Controls: React.FC<ControlsProps> = ({
         onChange={handleRangeChange}
         style={{ '--played': `${playedPercent}%` } as React.CSSProperties}
       />
-      
-      <span className="time-display">{formatTime(duration)}</span>
+
+      <span className="font-mono text-sm text-gray-500">{formatTime(duration)}</span>
     </div>
   );
 };
