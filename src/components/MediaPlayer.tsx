@@ -15,7 +15,9 @@ export const MediaPlayer = forwardRef<HTMLMediaElement, MediaPlayerProps>(({
   onEnded
 }, ref) => {
   const isVideo = file?.type.startsWith('video/');
-  const src = file ? URL.createObjectURL(file) : undefined;
+  const src = React.useMemo(() => {
+    return file ? URL.createObjectURL(file) : undefined;
+  }, [file]);
 
   useEffect(() => {
     return () => {
