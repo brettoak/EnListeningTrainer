@@ -17,7 +17,7 @@ export const FileSelector: React.FC<FileSelectorProps> = ({ onFileSelect, select
   };
 
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex flex-row items-center gap-4">
       <input
         type="file"
         ref={fileInputRef}
@@ -27,15 +27,16 @@ export const FileSelector: React.FC<FileSelectorProps> = ({ onFileSelect, select
       />
 
       <button
-        className="bg-[#646cff] text-white px-4 py-2 rounded font-medium hover:bg-[#535bf2] transition-colors shadow-sm"
+        className="bg-[#646cff] text-white px-4 py-2 rounded font-medium hover:bg-[#535bf2] transition-colors shadow-sm whitespace-nowrap"
         onClick={() => fileInputRef.current?.click()}
       >
         选择音频/视频文件
       </button>
 
       {selectedFileName && (
-        <div className="text-[#646cff] font-medium text-lg bg-[#e3f2fd] px-4 py-2 rounded-md mt-2">
-          听力材料：<span>{selectedFileName}</span>
+        <div className="text-[#646cff] font-medium text-base bg-[#e3f2fd] px-3 py-1.5 rounded-md">
+          <span className="text-slate-500 mr-2 text-sm font-normal">听力材料：</span>
+          <span>{selectedFileName}</span>
         </div>
       )}
     </div>
