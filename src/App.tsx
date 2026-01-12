@@ -93,7 +93,7 @@ function App() {
   return (
     <div className="max-w-[90%] mx-auto p-6 min-h-screen flex flex-col font-sans">
       <header className="flex justify-between items-center mb-8 bg-white p-4 rounded-xl shadow-sm border border-slate-100">
-        <h1 className="text-xl font-bold text-slate-700 hidden md:block">Listening Trainer</h1>
+        <h1 className="text-xl font-bold text-slate-700 hidden md:block">英语听力训练</h1>
         <div className="flex gap-4 items-center flex-wrap justify-end flex-1">
           <FileSelector onFileSelect={handleFileSelect} selectedFileName={selectedFileName} />
           <StudyTimer />
@@ -129,7 +129,7 @@ function App() {
       </main>
 
       <footer className="text-center mt-12 mb-6 text-slate-400 text-sm">
-        copyright © 2026 English Intensive Listening Tool All Rights Reserved
+        版权所有 © 2026 英语精听工具 保留所有权利
       </footer>
     </div>
   );

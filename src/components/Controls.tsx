@@ -64,7 +64,7 @@ export const Controls: React.FC<ControlsProps> = ({
         <button
           className="text-slate-400 hover:text-[#646cff] transition-colors p-2 rounded-full hover:bg-slate-50"
           onClick={onRewind}
-          title="Rewind 5 seconds"
+          title="快退 5 秒"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="11 19 2 12 11 5 11 19"></polygon><polygon points="22 19 13 12 22 5 22 19"></polygon></svg>
         </button>
@@ -72,7 +72,7 @@ export const Controls: React.FC<ControlsProps> = ({
         <button
           className="bg-[#646cff] text-white rounded-full w-12 h-12 flex items-center justify-center shadow-md hover:bg-[#535bf2] hover:scale-105 active:scale-95 transition-all outline-none"
           onClick={onPlayPause}
-          title="Play / Pause"
+          title="播放 / 暂停"
         >
           {isPlaying ? (
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
@@ -84,7 +84,7 @@ export const Controls: React.FC<ControlsProps> = ({
         <button
           className="text-slate-400 hover:text-[#646cff] transition-colors p-2 rounded-full hover:bg-slate-50"
           onClick={onForward}
-          title="Forward 5 seconds"
+          title="快进 5 秒"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 19 22 12 13 5 13 19"></polygon><polygon points="2 19 11 12 2 5 2 19"></polygon></svg>
         </button>

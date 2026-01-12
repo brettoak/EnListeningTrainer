@@ -30,12 +30,12 @@ export const FileSelector: React.FC<FileSelectorProps> = ({ onFileSelect, select
         className="bg-[#646cff] text-white px-4 py-2 rounded font-medium hover:bg-[#535bf2] transition-colors shadow-sm"
         onClick={() => fileInputRef.current?.click()}
       >
-        Select Audio/Video File
+        选择音频/视频文件
       </button>
 
       {selectedFileName && (
         <div className="text-[#646cff] font-medium text-lg bg-[#e3f2fd] px-4 py-2 rounded-md mt-2">
-          Listening Material: <span>{selectedFileName}</span>
+          听力材料：<span>{selectedFileName}</span>
         </div>
       )}
     </div>

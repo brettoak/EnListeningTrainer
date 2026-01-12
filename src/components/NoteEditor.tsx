@@ -86,7 +86,7 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ lastFileName }) => {
     const dateStr = `${now.getFullYear().toString().slice(2)}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}-${pad(now.getHours())}-${pad(now.getMinutes())}`;
     const fileName = `${baseName}-${dateStr}.html`;
 
-    const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Notes</title></head><body>${value}</body></html>`;
+    const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>笔记</title></head><body>${value}</body></html>`;
     const blob = new Blob([html], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -134,19 +134,19 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ lastFileName }) => {
     <div className="w-full">
       <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex flex-col h-[700px] relative text-gray-800">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-bold text-slate-700">Notes</h2>
+          <h2 className="text-lg font-bold text-slate-700">笔记</h2>
           <div className="flex gap-2">
             <button
               className="px-4 py-2 text-sm rounded bg-slate-50 text-slate-600 font-medium hover:bg-slate-100 transition-colors border border-slate-200"
               onClick={() => fileInputRef.current?.click()}
             >
-              Import
+              导入
             </button>
             <button
               className="px-4 py-2 text-sm rounded bg-[#646cff] text-white font-medium shadow-sm hover:bg-[#535bf2] transition-colors"
               onClick={handleDownload}
             >
-              Download & Clear
+              下载并清空
             </button>
             <input
               type="file"

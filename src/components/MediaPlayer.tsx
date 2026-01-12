@@ -25,7 +25,7 @@ export const MediaPlayer = forwardRef<HTMLMediaElement, MediaPlayerProps>(({
     };
   }, [src]);
 
-  if (!file) return <div className="text-gray-500 italic m-8">Select a file to start</div>;
+  if (!file) return <div className="text-gray-500 italic m-8">请选择文件开始</div>;
 
   const commonProps = {
     ref: ref as React.Ref<any>,
