@@ -12,6 +12,7 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [playerWidth, setPlayerWidth] = useState(100);
 
   const mediaRef = useRef<HTMLMediaElement>(null);
 
@@ -90,6 +91,54 @@ function App() {
     }
   };
 
+  const [isDragging, setIsDragging] = useState(false);
+
+  const togglePlayerWidth = () => {
+    setPlayerWidth(prev => {
+      if (prev === 100) return 80;
+      if (prev === 80) return 60;
+      return 100;
+    });
+  };
+
+  const handleDragStart = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    e.preventDefault();
+  };
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDragging) return;
+      const windowWidth = window.innerWidth;
+      const mouseX = e.clientX;
+      const center = windowWidth / 2;
+
+      // Calculate new half-width (distance from center to mouse)
+      // Assuming right handle: distance = mouseX - center
+      const distanceFromCenter = Math.abs(mouseX - center);
+      const newWidthPx = distanceFromCenter * 2;
+      let newWidthPercent = (newWidthPx / windowWidth) * 100;
+
+      // Clamp
+      newWidthPercent = Math.max(30, Math.min(100, newWidthPercent));
+      setPlayerWidth(newWidthPercent);
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    if (isDragging) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+    }
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDragging]);
+
   return (
     <div className="max-w-[90%] mx-auto p-6 min-h-screen flex flex-col font-sans">
       <header className="flex justify-between items-center mb-8 bg-white p-4 rounded-xl shadow-sm border border-slate-100">
@@ -101,7 +150,18 @@ function App() {
       </header>
 
       <main className="flex-1 flex flex-col gap-6">
-        <div className="flex flex-col gap-0 rounded-2xl overflow-hidden shadow-lg bg-black/5 border border-slate-200">
+        <div
+          className={`flex flex-col gap-0 rounded-2xl overflow-hidden shadow-lg bg-black/5 border border-slate-200 mx-auto relative group/player ${isDragging ? '' : 'transition-all duration-300 ease-out'}`}
+          style={{ width: `${playerWidth}%` }}
+        >
+          {/* Resize Handle - Right */}
+          <div
+            className="absolute top-0 right-0 w-4 h-full cursor-col-resize z-50 flex items-center justify-center opacity-0 group-hover/player:opacity-100 hover:opacity-100 transition-opacity"
+            onMouseDown={handleDragStart}
+          >
+            <div className="w-1.5 h-12 bg-slate-300 rounded-full shadow-sm hover:bg-[#646cff] transition-colors"></div>
+          </div>
+
           <MediaPlayer
             ref={mediaRef}
             file={file}
@@ -119,6 +179,7 @@ function App() {
               onSeek={handleSeek}
               onRewind={handleRewind}
               onForward={handleForward}
+              onToggleSize={togglePlayerWidth}
             />
           </div>
         </div>
