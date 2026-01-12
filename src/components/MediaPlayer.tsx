@@ -40,13 +40,11 @@ export const MediaPlayer = forwardRef<HTMLMediaElement, MediaPlayerProps>(({
   };
 
   return (
-    <div className="w-full bg-black/5 flex justify-center items-center p-0">
+    <div className={`w-full bg-black/5 flex justify-center items-center ${isVideo ? 'p-0' : 'h-0 overflow-hidden'}`}>
       {isVideo ? (
         <video {...commonProps} />
       ) : (
-        <div className="p-8 w-full flex justify-center">
-          <audio {...commonProps} className="w-full" controls />
-        </div>
+        <audio {...commonProps} className="hidden" />
       )}
     </div>
   );

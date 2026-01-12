@@ -110,7 +110,7 @@ function App() {
             onEnded={() => setIsPlaying(false)}
           />
 
-          <div className="bg-white border-t border-slate-100 p-4">
+          <div className={`bg-white p-4 ${file && !file.type.startsWith('video/') ? '' : 'border-t border-slate-100'}`}>
             <Controls
               isPlaying={isPlaying}
               currentTime={currentTime}
