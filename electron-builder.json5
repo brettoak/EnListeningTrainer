@@ -1,0 +1,24 @@
+{
+  "appId": "com.enlisteningtrainer.app",
+  "productName": "EnListeningTrainer",
+  "directories": {
+    "output": "dist-electron_build"
+  },
+  "files": [
+    "dist/**/*",
+    "dist-electron/**/*",
+    "package.json"
+  ],
+  "mac": {
+    "icon": "public/logo.png",
+    "target": ["dmg"]
+  },
+  "win": {
+    "icon": "public/logo.png",
+    "target": ["nsis"]
+  },
+  "linux": {
+    "icon": "public/logo.png",
+    "target": ["AppImage"]
+  }
+}

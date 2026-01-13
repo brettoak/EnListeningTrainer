@@ -21,6 +21,7 @@ const createWindow = () => {
             contextIsolation: true,
             webSecurity: false // Helping with local file loading (video/audio)
         },
+        icon: path_1.default.join(__dirname, '../public/logo.png')
     });
     if (process.env.VITE_DEV_SERVER_URL) {
         mainWindow.loadURL(process.env.VITE_DEV_SERVER_URL);

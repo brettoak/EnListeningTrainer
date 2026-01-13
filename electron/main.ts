@@ -9,9 +9,9 @@ if (require('electron-squirrel-startup')) {
 let mainWindow: BrowserWindow | null = null;
 
 const createWindow = () => {
-    const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+  const { width, height } = screen.getPrimaryDisplay().workAreaSize;
 
-    mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: Math.min(1280, width),
     height: Math.min(800, height),
     webPreferences: {
@@ -20,6 +20,7 @@ const createWindow = () => {
       contextIsolation: true,
       webSecurity: false // Helping with local file loading (video/audio)
     },
+    icon: path.join(__dirname, '../public/logo.png')
   });
 
   if (process.env.VITE_DEV_SERVER_URL) {
