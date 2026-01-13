@@ -2,6 +2,6 @@
 
 @layer base {
     body {
-        @apply bg-slate-50 text-slate-800 font-sans antialiased;
+        @apply bg-slate-50 text-slate-800 font-sans antialiased dark:bg-slate-900 dark:text-slate-100 transition-colors duration-300;
     }
 }

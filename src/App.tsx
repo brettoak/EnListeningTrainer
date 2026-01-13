@@ -4,9 +4,10 @@ import { StudyTimer } from './components/StudyTimer';
 import { MediaPlayer } from './components/MediaPlayer';
 import { Controls } from './components/Controls';
 import { NoteEditor } from './components/NoteEditor';
-// import './App.css'; // Removed for Tailwind migration
+import { ThemeProvider } from './context/ThemeContext';
+import { ThemeToggle } from './components/ThemeToggle';
 
-function App() {
+function AppContent() {
   const [file, setFile] = useState<File | null>(null);
   const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -15,17 +16,6 @@ function App() {
   const [playerWidth, setPlayerWidth] = useState(100);
 
   const mediaRef = useRef<HTMLMediaElement>(null);
-
-  // Load last file (stub for now, as File object persistence is tricky in web/electron strict)
-  // In Electron, we can persist path and re-read.
-  // We'd need IPC to read file from path.
-  // For now, we rely on user selecting file again, or use 'electron' API if we enhanced.
-  // But original requirement: "Select Audio/Video File".
-  // Original app stored "lastFileName" but couldn't really reload the generic inputs file object automatically unless blob was stored (which expires).
-  // Or maybe it used some other quirk.
-  // In Electron we can use node fs. 
-  // But let's stick to the File object from input for now to match Web API, 
-  // unless we upgrade to using 'electron' remote/ipc for file opening.
 
   useEffect(() => {
     // Keyboard shortcuts
@@ -140,18 +130,19 @@ function App() {
   }, [isDragging]);
 
   return (
-    <div className="max-w-[90%] mx-auto p-6 min-h-screen flex flex-col font-sans">
-      <header className="flex justify-between items-center mb-8 bg-white p-4 rounded-xl shadow-sm border border-slate-100">
-        <h1 className="text-xl font-bold text-slate-700 hidden md:block">英语听力训练</h1>
+    <div className="max-w-[90%] mx-auto p-6 min-h-screen flex flex-col font-sans transition-colors duration-300">
+      <header className="flex justify-between items-center mb-8 bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 transition-all duration-300">
+        <h1 className="text-xl font-bold text-slate-700 dark:text-slate-200 hidden md:block">英语听力训练</h1>
         <div className="flex gap-4 items-center flex-wrap justify-end flex-1">
           <FileSelector onFileSelect={handleFileSelect} selectedFileName={selectedFileName} />
           <StudyTimer />
+          <ThemeToggle />
         </div>
       </header>
 
       <main className="flex-1 flex flex-col gap-6">
         <div
-          className={`flex flex-col gap-0 rounded-2xl overflow-hidden shadow-lg bg-black/5 border border-slate-200 mx-auto relative group/player ${isDragging ? '' : 'transition-all duration-300 ease-out'}`}
+          className={`flex flex-col gap-0 rounded-2xl overflow-hidden shadow-lg bg-black/5 dark:bg-black/20 border border-slate-200 dark:border-slate-700 mx-auto relative group/player ${isDragging ? '' : 'transition-all duration-300 ease-out'}`}
           style={{ width: `${playerWidth}%` }}
         >
           {/* Resize Handle - Right */}
@@ -159,7 +150,7 @@ function App() {
             className="absolute top-0 right-0 w-4 h-full cursor-col-resize z-50 flex items-center justify-center opacity-0 group-hover/player:opacity-100 hover:opacity-100 transition-opacity"
             onMouseDown={handleDragStart}
           >
-            <div className="w-1.5 h-12 bg-slate-300 rounded-full shadow-sm hover:bg-[#646cff] transition-colors"></div>
+            <div className="w-1.5 h-12 bg-slate-300 dark:bg-slate-600 rounded-full shadow-sm hover:bg-[#646cff] transition-colors"></div>
           </div>
 
           <MediaPlayer
@@ -170,7 +161,7 @@ function App() {
             onEnded={() => setIsPlaying(false)}
           />
 
-          <div className={`bg-white p-4 ${file && !file.type.startsWith('video/') ? '' : 'border-t border-slate-100'}`}>
+          <div className={`bg-white dark:bg-slate-800 p-4 transition-colors duration-300 ${file && !file.type.startsWith('video/') ? '' : 'border-t border-slate-100 dark:border-slate-700'}`}>
             <Controls
               isPlaying={isPlaying}
               currentTime={currentTime}
@@ -189,10 +180,18 @@ function App() {
         </div>
       </main>
 
-      <footer className="text-center mt-12 mb-6 text-slate-400 text-sm">
+      <footer className="text-center mt-12 mb-6 text-slate-400 dark:text-slate-500 text-sm">
         版权所有 © 2026 英语精听工具 保留所有权利
       </footer>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }
 
