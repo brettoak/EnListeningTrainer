@@ -132,18 +132,18 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ lastFileName }) => {
 
   return (
     <div className="w-full">
-      <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex flex-col h-[700px] relative text-gray-800">
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 p-6 flex flex-col h-[700px] relative text-gray-800 dark:text-gray-200 transition-colors">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-bold text-slate-700">笔记</h2>
+          <h2 className="text-lg font-bold text-slate-700 dark:text-slate-200">笔记</h2>
           <div className="flex gap-2">
             <button
-              className="px-4 py-2 text-sm rounded bg-slate-50 text-slate-600 font-medium hover:bg-slate-100 transition-colors border border-slate-200"
+              className="px-4 py-2 text-sm rounded bg-slate-50 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-medium hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors border border-slate-200 dark:border-slate-600"
               onClick={() => fileInputRef.current?.click()}
             >
               导入
             </button>
             <button
-              className="px-4 py-2 text-sm rounded bg-[#646cff] text-white font-medium shadow-sm hover:bg-[#535bf2] transition-colors"
+              className="px-4 py-2 text-sm rounded bg-[#646cff] text-white font-medium shadow-sm hover:bg-[#535bf2] transition-colors dark:bg-[#535bf2] dark:hover:bg-[#4044c9]"
               onClick={handleDownload}
             >
               下载并清空
@@ -164,7 +164,7 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ lastFileName }) => {
           onChange={handleChange}
           modules={modules}
           ref={quillRef}
-          className="flex-1 mb-0 flex flex-col [&_.ql-container]:flex-1 [&_.ql-container]:border-slate-200 [&_.ql-toolbar]:border-slate-200 [&_.ql-toolbar]:bg-slate-50 [&_.ql-toolbar]:rounded-t-lg [&_.ql-container]:rounded-b-lg"
+          className="flex-1 mb-0 flex flex-col [&_.ql-container]:flex-1 [&_.ql-container]:border-slate-200 dark:[&_.ql-container]:border-slate-700 [&_.ql-toolbar]:border-slate-200 dark:[&_.ql-toolbar]:border-slate-700 [&_.ql-toolbar]:bg-slate-50 dark:[&_.ql-toolbar]:bg-slate-700 [&_.ql-toolbar]:rounded-t-lg [&_.ql-container]:rounded-b-lg [&_.ql-editor]:text-slate-800 dark:[&_.ql-editor]:text-slate-200 dark:[&_.ql-stroke]:stroke-slate-200"
         />
       </div>
     </div>

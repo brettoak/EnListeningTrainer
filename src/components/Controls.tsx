@@ -37,12 +37,12 @@ export const Controls: React.FC<ControlsProps> = ({
 
   return (
 
-    <div className="flex items-center gap-4 w-full bg-white p-2 rounded-lg">
+    <div className="flex items-center gap-4 w-full bg-white dark:bg-slate-800 p-2 rounded-lg transition-colors">
 
       {/* Controls Group */}
       <div className="flex items-center gap-3">
         <button
-          className="text-slate-400 hover:text-[#646cff] transition-colors p-2 rounded-full hover:bg-slate-50"
+          className="text-slate-400 dark:text-slate-400 hover:text-[#646cff] dark:hover:text-[#a5b4fc] transition-colors p-2 rounded-full hover:bg-slate-50 dark:hover:bg-slate-700"
           onClick={onRewind}
           title="快退 5 秒"
         >
@@ -50,7 +50,7 @@ export const Controls: React.FC<ControlsProps> = ({
         </button>
 
         <button
-          className="bg-[#646cff] text-white rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-[#535bf2] hover:scale-105 active:scale-95 transition-all outline-none"
+          className="bg-[#646cff] text-white rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-[#535bf2] hover:scale-105 active:scale-95 transition-all outline-none dark:bg-[#535bf2] dark:hover:bg-[#4044c9]"
           onClick={onPlayPause}
           title="播放 / 暂停"
         >
@@ -62,7 +62,7 @@ export const Controls: React.FC<ControlsProps> = ({
         </button>
 
         <button
-          className="text-slate-400 hover:text-[#646cff] transition-colors p-2 rounded-full hover:bg-slate-50"
+          className="text-slate-400 dark:text-slate-400 hover:text-[#646cff] dark:hover:text-[#a5b4fc] transition-colors p-2 rounded-full hover:bg-slate-50 dark:hover:bg-slate-700"
           onClick={onForward}
           title="快进 5 秒"
         >
@@ -72,11 +72,11 @@ export const Controls: React.FC<ControlsProps> = ({
 
       {/* Time & Progress */}
       <div className="flex items-center gap-3 flex-1">
-        <span className="font-mono text-xs text-slate-500 w-10 text-right font-medium">{formatTime(currentTime)}</span>
+        <span className="font-mono text-xs text-slate-500 dark:text-slate-400 w-10 text-right font-medium">{formatTime(currentTime)}</span>
 
-        <div className="relative flex-1 h-3 bg-slate-100 rounded-full group cursor-pointer border border-slate-200">
+        <div className="relative flex-1 h-3 bg-slate-100 dark:bg-slate-600 rounded-full group cursor-pointer border border-slate-200 dark:border-slate-600">
           <div
-            className="absolute top-0 left-0 h-full bg-[#646cff] rounded-full transition-all duration-100"
+            className="absolute top-0 left-0 h-full bg-[#646cff] dark:bg-[#535bf2] rounded-full transition-all duration-100"
             style={{ width: `${playedPercent}%` }}
           />
           <input
@@ -90,12 +90,12 @@ export const Controls: React.FC<ControlsProps> = ({
           />
         </div>
 
-        <span className="font-mono text-xs text-slate-500 w-10 font-medium">{formatTime(duration)}</span>
+        <span className="font-mono text-xs text-slate-500 dark:text-slate-400 w-10 font-medium">{formatTime(duration)}</span>
 
-        <div className="w-px h-4 bg-slate-200 mx-2"></div>
+        <div className="w-px h-4 bg-slate-200 dark:bg-slate-600 mx-2"></div>
 
         <button
-          className="text-slate-400 hover:text-[#646cff] transition-colors p-1 rounded hover:bg-slate-50"
+          className="text-slate-400 dark:text-slate-400 hover:text-[#646cff] dark:hover:text-[#a5b4fc] transition-colors p-1 rounded hover:bg-slate-50 dark:hover:bg-slate-700"
           onClick={onToggleSize}
           title="调整大小"
         >

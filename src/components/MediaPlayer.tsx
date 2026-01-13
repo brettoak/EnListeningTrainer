@@ -25,7 +25,7 @@ export const MediaPlayer = forwardRef<HTMLMediaElement, MediaPlayerProps>(({
     };
   }, [src]);
 
-  if (!file) return <div className="text-gray-500 italic m-8">请选择文件开始</div>;
+  if (!file) return <div className="text-gray-500 dark:text-gray-400 italic m-8">请选择文件开始</div>;
 
   const commonProps = {
     ref: ref as React.Ref<any>,
@@ -40,7 +40,7 @@ export const MediaPlayer = forwardRef<HTMLMediaElement, MediaPlayerProps>(({
   };
 
   return (
-    <div className={`w-full bg-black/5 flex justify-center items-center ${isVideo ? 'p-0' : 'h-0 overflow-hidden'}`}>
+    <div className={`w-full bg-black/5 dark:bg-black/20 flex justify-center items-center ${isVideo ? 'p-0' : 'h-0 overflow-hidden'}`}>
       {isVideo ? (
         <video {...commonProps} />
       ) : (
