@@ -164,7 +164,20 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ lastFileName }) => {
           onChange={handleChange}
           modules={modules}
           ref={quillRef}
-          className="flex-1 mb-0 flex flex-col [&_.ql-container]:flex-1 [&_.ql-container]:border-slate-200 dark:[&_.ql-container]:border-slate-700 [&_.ql-toolbar]:border-slate-200 dark:[&_.ql-toolbar]:border-slate-700 [&_.ql-toolbar]:bg-slate-50 dark:[&_.ql-toolbar]:bg-slate-700 [&_.ql-toolbar]:rounded-t-lg [&_.ql-container]:rounded-b-lg [&_.ql-editor]:text-slate-800 dark:[&_.ql-editor]:text-slate-200 dark:[&_.ql-stroke]:stroke-slate-200"
+          className="flex-1 mb-0 flex flex-col 
+            [&_.ql-container]:flex-1 
+            [&_.ql-container]:border-slate-200 dark:[&_.ql-container]:border-slate-700 
+            [&_.ql-toolbar]:border-slate-200 dark:[&_.ql-toolbar]:border-slate-700 
+            [&_.ql-toolbar]:bg-slate-50 dark:[&_.ql-toolbar]:bg-slate-700 
+            [&_.ql-toolbar]:rounded-t-lg 
+            [&_.ql-container]:rounded-b-lg 
+            [&_.ql-editor]:text-slate-800 dark:[&_.ql-editor]:text-slate-200 
+            dark:[&_.ql-stroke]:!stroke-slate-200 
+            dark:[&_.ql-fill]:!fill-slate-200 
+            dark:[&_.ql-picker]:!text-slate-200
+            dark:[&_button:hover_.ql-stroke]:!stroke-white
+            dark:[&_button:hover_.ql-fill]:!fill-white
+            dark:[&_.ql-picker-label:hover]:!text-white"
         />
       </div>
     </div>
