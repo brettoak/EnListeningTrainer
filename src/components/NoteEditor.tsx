@@ -171,7 +171,7 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ lastFileName }) => {
             [&_.ql-toolbar]:bg-slate-50 dark:[&_.ql-toolbar]:bg-slate-700 
             [&_.ql-toolbar]:rounded-t-lg 
             [&_.ql-container]:rounded-b-lg 
-            [&_.ql-editor]:text-slate-800 dark:[&_.ql-editor]:text-slate-200 
+            [&_.ql-editor]:text-lg dark:[&_.ql-editor]:text-slate-200 
             dark:[&_.ql-stroke]:!stroke-slate-200 
             dark:[&_.ql-fill]:!fill-slate-200 
             dark:[&_.ql-picker]:!text-slate-200
