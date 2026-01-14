@@ -6,6 +6,9 @@ import { Controls } from './components/Controls';
 import { NoteEditor } from './components/NoteEditor';
 import { ThemeProvider } from './context/ThemeContext';
 import { ThemeToggle } from './components/ThemeToggle';
+import { useShortcuts } from './hooks/useShortcuts';
+import { ShortcutSettings } from './components/ShortcutSettings';
+import { Settings } from 'lucide-react';
 
 function AppContent() {
   const [file, setFile] = useState<File | null>(null);
@@ -14,6 +17,9 @@ function AppContent() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [playerWidth, setPlayerWidth] = useState(100);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+  const { shortcuts, updateShortcut, resetShortcuts } = useShortcuts();
 
   const mediaRef = useRef<HTMLMediaElement>(null);
   const fileSelectorRef = useRef<FileSelectorHandle>(null);
@@ -21,18 +27,20 @@ function AppContent() {
   useEffect(() => {
     // Keyboard shortcuts
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Numpad 2: Rewind
-      if (e.code === 'Numpad2') {
+      // Avoid firing shortcuts when typing in inputs/textareas
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement || (e.target as HTMLElement).isContentEditable) {
+        return;
+      }
+
+      if (e.code === shortcuts.rewind) {
         handleRewind();
         e.preventDefault();
       }
-      // Numpad 3: Forward
-      else if (e.code === 'Numpad3') {
+      else if (e.code === shortcuts.forward) {
         handleForward();
         e.preventDefault();
       }
-      // Numpad Enter: Play/Pause
-      else if (e.code === 'NumpadEnter') {
+      else if (e.code === shortcuts.playPause) {
         togglePlay();
         e.preventDefault();
       }
@@ -40,7 +48,7 @@ function AppContent() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isPlaying]);
+  }, [isPlaying, shortcuts]);
 
   const handleFileSelect = (selectedFile: File) => {
     setFile(selectedFile);
@@ -137,9 +145,24 @@ function AppContent() {
         <div className="flex gap-4 items-center flex-wrap justify-end flex-1">
           <FileSelector ref={fileSelectorRef} onFileSelect={handleFileSelect} selectedFileName={selectedFileName} />
           <StudyTimer />
+          <button
+            onClick={() => setIsSettingsOpen(true)}
+            className="p-2 rounded-lg bg-slate-50 dark:bg-slate-700 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-600"
+            title="快捷键设置"
+          >
+            <Settings size={20} />
+          </button>
           <ThemeToggle />
         </div>
       </header>
+
+      <ShortcutSettings
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+        shortcuts={shortcuts}
+        onUpdate={updateShortcut}
+        onReset={resetShortcuts}
+      />
 
       <main className="flex-1 flex flex-col gap-6">
         <div
