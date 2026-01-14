@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { FileSelector } from './components/FileSelector';
+import { FileSelector, type FileSelectorHandle } from './components/FileSelector';
 import { StudyTimer } from './components/StudyTimer';
 import { MediaPlayer } from './components/MediaPlayer';
 import { Controls } from './components/Controls';
@@ -16,6 +16,7 @@ function AppContent() {
   const [playerWidth, setPlayerWidth] = useState(100);
 
   const mediaRef = useRef<HTMLMediaElement>(null);
+  const fileSelectorRef = useRef<FileSelectorHandle>(null);
 
   useEffect(() => {
     // Keyboard shortcuts
@@ -134,7 +135,7 @@ function AppContent() {
       <header className="flex justify-between items-center mb-8 bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 transition-all duration-300">
         <h1 className="text-xl font-bold text-slate-700 dark:text-slate-200 hidden md:block">英语听力训练</h1>
         <div className="flex gap-4 items-center flex-wrap justify-end flex-1">
-          <FileSelector onFileSelect={handleFileSelect} selectedFileName={selectedFileName} />
+          <FileSelector ref={fileSelectorRef} onFileSelect={handleFileSelect} selectedFileName={selectedFileName} />
           <StudyTimer />
           <ThemeToggle />
         </div>
@@ -159,6 +160,7 @@ function AppContent() {
             onTimeUpdate={(t) => setCurrentTime(t)}
             onDurationChange={setDuration}
             onEnded={() => setIsPlaying(false)}
+            onSelectFileClick={() => fileSelectorRef.current?.open()}
           />
 
           <div className={`bg-white dark:bg-slate-800 p-4 transition-colors duration-300 ${file && !file.type.startsWith('video/') ? '' : 'border-t border-slate-100 dark:border-slate-700'}`}>

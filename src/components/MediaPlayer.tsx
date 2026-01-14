@@ -6,13 +6,15 @@ interface MediaPlayerProps {
   onTimeUpdate: (currentTime: number) => void;
   onDurationChange: (duration: number) => void;
   onEnded: () => void;
+  onSelectFileClick?: () => void;
 }
 
 export const MediaPlayer = forwardRef<HTMLMediaElement, MediaPlayerProps>(({
   file,
   onTimeUpdate,
   onDurationChange,
-  onEnded
+  onEnded,
+  onSelectFileClick
 }, ref) => {
   const isVideo = file?.type.startsWith('video/');
   const src = React.useMemo(() => {
@@ -25,7 +27,17 @@ export const MediaPlayer = forwardRef<HTMLMediaElement, MediaPlayerProps>(({
     };
   }, [src]);
 
-  if (!file) return <div className="text-gray-500 dark:text-gray-400 italic m-8">请选择文件开始</div>;
+  if (!file) {
+    return (
+      <div
+        className="text-gray-500 dark:text-gray-400 italic m-8 cursor-pointer hover:text-[#646cff] dark:hover:text-[#535bf2] transition-colors select-none"
+        onClick={onSelectFileClick}
+        title="点击选择文件"
+      >
+        请选择文件开始
+      </div>
+    );
+  }
 
   const commonProps = {
     ref: ref as React.Ref<any>,

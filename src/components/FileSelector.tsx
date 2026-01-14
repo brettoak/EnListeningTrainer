@@ -1,13 +1,23 @@
-import React, { useRef } from 'react';
+import React, { useRef, useImperativeHandle, forwardRef } from 'react';
 // import './FileSelector.css'; // Removed for Tailwind migration
+
+export interface FileSelectorHandle {
+  open: () => void;
+}
 
 interface FileSelectorProps {
   onFileSelect: (file: File) => void;
   selectedFileName?: string | null;
 }
 
-export const FileSelector: React.FC<FileSelectorProps> = ({ onFileSelect, selectedFileName }) => {
+export const FileSelector = forwardRef<FileSelectorHandle, FileSelectorProps>(({ onFileSelect, selectedFileName }, ref) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useImperativeHandle(ref, () => ({
+    open: () => {
+      fileInputRef.current?.click();
+    }
+  }));
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -41,4 +51,6 @@ export const FileSelector: React.FC<FileSelectorProps> = ({ onFileSelect, select
       )}
     </div>
   );
-};
+});
+
+FileSelector.displayName = 'FileSelector';
