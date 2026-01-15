@@ -1,51 +1,71 @@
 <svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <radialGradient id="earthGrad" cx="50%" cy="40%" r="60%">
+    <!-- Vibrant Earth Gradient -->
+    <radialGradient id="earthGrad" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
       <stop offset="0%" stop-color="#4fd1ff"/>
       <stop offset="100%" stop-color="#0b3c7a"/>
     </radialGradient>
-
-    <linearGradient id="headGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#1e90ff"/>
-      <stop offset="100%" stop-color="#0b3c7a"/>
+    
+    <!-- Glossy Headphone Gradient -->
+    <linearGradient id="metalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f0f0f0"/>
+      <stop offset="49%" stop-color="#d0d0d0"/>
+      <stop offset="51%" stop-color="#b0b0b0"/>
+      <stop offset="100%" stop-color="#909090"/>
     </linearGradient>
+
+    <!-- Shadow for depth -->
+    <filter id="dropShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="15"/>
+      <feOffset dx="0" dy="10" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.3"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
   </defs>
 
-  <!-- Background -->
-  <rect x="0" y="0" width="1024" height="1024" fill="white"/>
+  <!-- Background (Optional, for app icon standard) -->
+  <rect width="1024" height="1024" rx="220" ry="220" fill="white"/>
 
-  <!-- Earth -->
-  <circle cx="512" cy="540" r="260" fill="url(#earthGrad)"/>
-
-  <!-- Simple continents -->
-  <path d="M420 420c60-40 140-30 160 0s-40 80-120 90-140-20-40-90z" fill="#5fd38d"/>
-  <path d="M560 620c60-20 140 10 120 60s-140 80-200 30 20-70 80-90z" fill="#5fd38d"/>
+  <!-- Main Globe (Centered) -->
+  <circle cx="512" cy="512" r="360" fill="url(#earthGrad)"/>
+  
+  <!-- Subtle Continents (Simplified shapes) -->
+  <path d="M512 152c-198.8 0-360 161.2-360 360 0 54.6 12.1 106.2 33.6 152.9 20.3-43.7 94.4-66.9 122.4-78.9 45-19.3 120-40 160-80 50-50 150-40 180 10 20 33.3-20 80-80 80-40 0-80-10-100-30-33.3-33.3-40-60-153.6-25.6C466.4 694.4 394 772 313.1 823.5c56.8 31.7 122.7 49.5 192.5 49.5 198.8 0 360-161.2 360-360S710.8 152 512 152z" fill="white" fill-opacity="0.2"/>
 
   <!-- Headphones -->
-  <path d="M260 520a252 252 0 0 1 504 0" fill="none" stroke="url(#headGrad)" stroke-width="40" stroke-linecap="round"/>
+  <!-- Headband -->
+  <path d="M192 512c0-176.7 143.3-320 320-320s320 143.3 320 320" fill="none" stroke="#2563eb" stroke-width="60" stroke-linecap="round"/>
+  
+  <!-- Earcups (Centered vertically on 512, slightly pushed out) -->
+  <rect x="132" y="412" width="100" height="200" rx="30" ry="30" fill="#1e40af" filter="url(#dropShadow)"/>
+  <rect x="792" y="412" width="100" height="200" rx="30" ry="30" fill="#1e40af" filter="url(#dropShadow)"/>
 
-  <!-- Left ear -->
-  <rect x="200" y="500" rx="40" ry="40" width="80" height="180" fill="#1e90ff"/>
-  <!-- Right ear -->
-  <rect x="744" y="500" rx="40" ry="40" width="80" height="180" fill="#1e90ff"/>
+  <!-- Speech Bubble (Floating in center, indicating language) -->
+  <g transform="translate(512, 540)"> <!-- Shifted down slightly for balance -->
+    <rect x="-240" y="-140" width="480" height="280" rx="60" ry="60" fill="white" filter="url(#dropShadow)"/>
+    <!-- Tail of bubble -->
+    <path d="M0 140 L-40 190 L-80 140 Z" fill="white"/>
+    
+    <!-- Waveform (Centered in bubble) -->
+    <g stroke="#2563eb" stroke-width="24" stroke-linecap="round">
+      <line x1="-140" y1="-40" x2="-140" y2="40"/>
+      <line x1="-80" y1="-70" x2="-80" y2="70"/>
+      <line x1="-20" y1="-100" x2="-20" y2="100"/>
+      <line x1="40" y1="-60" x2="40" y2="60"/>
+      <line x1="100" y1="-30" x2="100" y2="30"/>
+    </g>
 
-  <!-- Speech bubble -->
-  <rect x="320" y="450" rx="60" ry="60" width="360" height="200" fill="#0b5fd7"/>
-  <polygon points="420,700 380,760 460,720" fill="#0b5fd7"/>
-
-  <!-- Waveform -->
-  <path d="M430 600 L430 620 
-           M460 560 L460 660
-           M490 590 L490 630
-           M520 540 L520 680
-           M550 590 L550 630
-           M580 560 L580 660
-           M610 600 L610 620"
-        stroke="white" stroke-width="10" stroke-linecap="round"/>
-
-  <!-- Letter A -->
-  <text x="620" y="625" font-size="140" font-weight="bold" fill="white" font-family="Arial, Helvetica, sans-serif">
-    A
-  </text>
-
+    <!-- 'En' Text (Replacing 'A' with meaningful text, or just keeping the waveform clean) -->
+    <!-- Let's just create a nice stylized 'A' if the user insisted, but Waveform is safer for 'Listening'. 
+         User had 'Letter A' -> Maybe 'Audio'. I will put a small 'En' badge or just stick to the waveform which is universal.
+         Actually, let's put the Play button triangle integrated?
+         Let's stick to the visual clean look. I will add a Play triangle to the right of the waveform.
+    -->
+    <path d="M140 -40 L200 0 L140 40 Z" fill="#2563eb" stroke-linejoin="round"/>
+  </g>
 </svg>
