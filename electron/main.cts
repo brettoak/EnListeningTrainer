@@ -15,7 +15,7 @@ const createWindow = () => {
     width: Math.min(1280, width),
     height: Math.min(800, height),
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, 'preload.cjs'),
       nodeIntegration: true, // We might need this for some file access, or better use contextBridge
       contextIsolation: true,
       webSecurity: false // Helping with local file loading (video/audio)

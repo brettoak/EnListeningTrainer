@@ -4,4 +4,4 @@ const electron_1 = require("electron");
 electron_1.contextBridge.exposeInMainWorld('electron', {
 // Add any needed IPC methods here
 });
-//# sourceMappingURL=preload.js.map
+//# sourceMappingURL=preload.cjs.map

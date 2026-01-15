@@ -1,37 +1,51 @@
-
-<svg width="800" height="300" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="gradBlue" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#1e88e5;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#42a5f5;stop-opacity:1" />
-    </linearGradient>
-    <linearGradient id="gradOrange" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#ff6f00;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#ff9800;stop-opacity:1" />
+    <radialGradient id="earthGrad" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#4fd1ff"/>
+      <stop offset="100%" stop-color="#0b3c7a"/>
+    </radialGradient>
+
+    <linearGradient id="headGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1e90ff"/>
+      <stop offset="100%" stop-color="#0b3c7a"/>
     </linearGradient>
   </defs>
 
-  <!-- Speech bubble -->
-  <rect x="40" y="60" rx="24" ry="24" width="260" height="160" fill="url(#gradBlue)"/>
-  <polygon points="120,220 150,220 130,250" fill="url(#gradBlue)"/>
+  <!-- Background -->
+  <rect x="0" y="0" width="1024" height="1024" fill="white"/>
+
+  <!-- Earth -->
+  <circle cx="512" cy="540" r="260" fill="url(#earthGrad)"/>
+
+  <!-- Simple continents -->
+  <path d="M420 420c60-40 140-30 160 0s-40 80-120 90-140-20-40-90z" fill="#5fd38d"/>
+  <path d="M560 620c60-20 140 10 120 60s-140 80-200 30 20-70 80-90z" fill="#5fd38d"/>
 
   <!-- Headphones -->
-  <path d="M80 70 C80 20, 260 20, 260 70" fill="none" stroke="#ff9800" stroke-width="14"/>
-  <rect x="60" y="90" rx="14" ry="14" width="40" height="90" fill="#ff9800"/>
-  <rect x="260" y="90" rx="14" ry="14" width="40" height="90" fill="#ff9800"/>
+  <path d="M260 520a252 252 0 0 1 504 0" fill="none" stroke="url(#headGrad)" stroke-width="40" stroke-linecap="round"/>
+
+  <!-- Left ear -->
+  <rect x="200" y="500" rx="40" ry="40" width="80" height="180" fill="#1e90ff"/>
+  <!-- Right ear -->
+  <rect x="744" y="500" rx="40" ry="40" width="80" height="180" fill="#1e90ff"/>
+
+  <!-- Speech bubble -->
+  <rect x="320" y="450" rx="60" ry="60" width="360" height="200" fill="#0b5fd7"/>
+  <polygon points="420,700 380,760 460,720" fill="#0b5fd7"/>
 
   <!-- Waveform -->
-  <polyline points="110,140 130,140 145,120 160,170 175,130 190,150 210,150" 
-            fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M430 600 L430 620 
+           M460 560 L460 660
+           M490 590 L490 630
+           M520 540 L520 680
+           M550 590 L550 630
+           M580 560 L580 660
+           M610 600 L610 620"
+        stroke="white" stroke-width="10" stroke-linecap="round"/>
 
-  <!-- Quotation mark -->
-  <text x="70" y="140" font-size="72" fill="#bbdefb" font-family="Arial, Helvetica, sans-serif">“</text>
+  <!-- Letter A -->
+  <text x="620" y="625" font-size="140" font-weight="bold" fill="white" font-family="Arial, Helvetica, sans-serif">
+    A
+  </text>
 
-  <!-- Text -->
-  <text x="340" y="140" font-size="64" fill="#1e88e5" font-weight="bold" font-family="Arial, Helvetica, sans-serif">
-    English
-  </text>
-  <text x="340" y="210" font-size="64" fill="url(#gradOrange)" font-weight="bold" font-family="Arial, Helvetica, sans-serif">
-    Listening
-  </text>
 </svg>
