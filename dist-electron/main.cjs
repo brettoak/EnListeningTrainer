@@ -23,6 +23,7 @@ const createWindow = () => {
         },
         icon: path_1.default.join(__dirname, '../public/logo.png')
     });
+    mainWindow.maximize();
     if (process.env.VITE_DEV_SERVER_URL) {
         mainWindow.loadURL(process.env.VITE_DEV_SERVER_URL);
         mainWindow.webContents.openDevTools();

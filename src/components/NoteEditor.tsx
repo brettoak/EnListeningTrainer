@@ -164,7 +164,7 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ lastFileName }) => {
           onChange={handleChange}
           modules={modules}
           ref={quillRef}
-          className="flex-1 mb-0 flex flex-col 
+          className="flex-1 mb-0 flex flex-col min-h-0
             [&_.ql-container]:flex-1 
             [&_.ql-container]:border-slate-200 dark:[&_.ql-container]:border-slate-700 
             [&_.ql-toolbar]:border-slate-200 dark:[&_.ql-toolbar]:border-slate-700 
@@ -172,6 +172,7 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ lastFileName }) => {
             [&_.ql-toolbar]:rounded-t-lg 
             [&_.ql-container]:rounded-b-lg 
             [&_.ql-editor]:text-lg dark:[&_.ql-editor]:text-slate-200 
+            [&_.ql-editor]:overflow-y-auto
             dark:[&_.ql-stroke]:!stroke-slate-200 
             dark:[&_.ql-fill]:!fill-slate-200 
             dark:[&_.ql-picker]:!text-slate-200
