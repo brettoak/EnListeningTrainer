@@ -16,7 +16,15 @@
   ],
   "mac": {
     "icon": "public/logo.png",
-    "target": ["dmg"]
+    "target": [
+      {
+        "target": "dmg",
+        "arch": [
+          "x64",
+          "arm64"
+        ]
+      }
+    ]
   },
   "win": {
     "icon": "public/logo.png",
