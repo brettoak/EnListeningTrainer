@@ -1,73 +1,90 @@
-# React + TypeScript + Vite
+# English Listening Trainer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A powerful, standalone desktop application designed to help you improve your English listening skills through focused practice. Built with Electron, React, and TypeScript.
 
-Currently, two official plugins are available:
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌟 Features
 
-## React Compiler
+- **Advanced Media Player**
+    - Support for local audio and video files.
+    - **Smart Playback Controls**:
+        - Play/Pause.
+        - **Rewind/Forward 5s**: Quick navigation to repeat or skip sections.
+        - Adjustable playback speed (if supported by player).
+    - **Resizable Player**: Toggle between different player sizes for focused viewing or cleaner workspace.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Integrated Note Taking**
+    - **Rich Text Editor**: Write detailed notes while listening, with support for formatting.
+    - **Auto-Save**: Notes are automatically saved locally to prevent data loss.
+    - **Import/Export**: Import existing HTML notes or download your session notes as HTML files.
 
-## Expanding the ESLint configuration
+- **Study Tools**
+    - **Study Timer**: Track your listening session duration automatically.
+    - **File Selector**: easy access to your media files.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Customization**
+    - **Keyboard Shortcuts**: Fully customizable global shortcuts for playback control (Play/Pause, Rewind, Forward).
+    - **Theme Support**: Seamless switching between Light and Dark modes.
+    - **Internationalization**: Support for English and Chinese (Simplified) languages.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🛠 Tech Stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **Core**: [Electron](https://www.electronjs.org/), [React](https://react.dev/), [TypeScript](https://www.typescriptlang.org/)
+- **Build Tool**: [Vite](https://vitejs.dev/)
+- **Styling**: [TailwindCSS](https://tailwindcss.com/)
+- **State/Logic**: React Hooks, Context API
+- **Internationalization**: i18next
+- **Icons**: Lucide React
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (v18 or higher recommended)
+- npm or yarn
+
+### Installation
+
+1.  Clone the repository:
+    ```bash
+    git clone https://github.com/yourusername/en-listening-trainer.git
+    cd en-listening-trainer
+    ```
+
+2.  Install dependencies:
+    ```bash
+    npm install
+    ```
+
+### Development
+
+To run the application in development mode with hot reload:
+
+```bash
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+This command concurrently runs the Vite dev server and the Electron app.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Building for Production
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+To create a distributable application (dmg/exe/deb):
+
+```bash
+npm run build
 ```
+
+The output will be in the `dist-electron` or `release` directory depending on configuration.
+
+## ⌨️ Shortcuts
+
+The application comes with default shortcuts which can be customized in Settings:
+
+- **Play/Pause**: (Customizable)
+- **Rewind 5s**: (Customizable)
+- **Forward 5s**: (Customizable)
+
+## 📄 License
+
+This project is licensed under the MIT License.
