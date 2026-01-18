@@ -4,6 +4,11 @@
   "directories": {
     "output": "dist-electron_build"
   },
+  "publish": {
+    "provider": "github",
+    "owner": "brettoak",
+    "repo": "EnListeningTrainer"
+  },
   "files": [
     "dist/**/*",
     "dist-electron/**/*",
