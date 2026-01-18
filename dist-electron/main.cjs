@@ -28,6 +28,10 @@ const createWindow = () => {
         mainWindow.loadURL(process.env.VITE_DEV_SERVER_URL);
         mainWindow.webContents.openDevTools();
     }
+    else if (process.env.NODE_ENV === 'development') {
+        mainWindow.loadURL('http://localhost:5173');
+        mainWindow.webContents.openDevTools();
+    }
     else {
         mainWindow.loadFile(path_1.default.join(__dirname, '../dist/index.html'));
     }
