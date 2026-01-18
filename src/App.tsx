@@ -7,10 +7,12 @@ import { NoteEditor } from './components/NoteEditor';
 import { ThemeProvider } from './context/ThemeContext';
 import { ThemeToggle } from './components/ThemeToggle';
 import { useShortcuts } from './hooks/useShortcuts';
-import { ShortcutSettings } from './components/ShortcutSettings';
+import { Settings as SettingsModal } from './components/Settings';
 import { Settings } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 function AppContent() {
+  const { t } = useTranslation();
   const [file, setFile] = useState<File | null>(null);
   const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -141,14 +143,14 @@ function AppContent() {
   return (
     <div className="max-w-[90%] mx-auto p-6 min-h-screen flex flex-col font-sans transition-colors duration-300">
       <header className="flex justify-between items-center mb-8 bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 transition-all duration-300">
-        <h1 className="text-xl font-bold text-slate-700 dark:text-slate-200 hidden md:block">英语听力训练</h1>
+        <h1 className="text-xl font-bold text-slate-700 dark:text-slate-200 hidden md:block">{t('app.title')}</h1>
         <div className="flex gap-4 items-center flex-wrap justify-end flex-1">
           <FileSelector ref={fileSelectorRef} onFileSelect={handleFileSelect} selectedFileName={selectedFileName} />
           <StudyTimer />
           <button
             onClick={() => setIsSettingsOpen(true)}
             className="p-2 rounded-lg bg-slate-50 dark:bg-slate-700 hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-600"
-            title="快捷键设置"
+            title={t('shortcuts.tooltip')}
           >
             <Settings size={20} />
           </button>
@@ -156,7 +158,7 @@ function AppContent() {
         </div>
       </header>
 
-      <ShortcutSettings
+      <SettingsModal
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}
         shortcuts={shortcuts}
@@ -206,7 +208,7 @@ function AppContent() {
       </main>
 
       <footer className="text-center mt-12 mb-6 text-slate-400 dark:text-slate-500 text-sm">
-        版权所有 © 2026 英语精听工具 保留所有权利
+        {t('app.copyright')}
       </footer>
     </div>
   );

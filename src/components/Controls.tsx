@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 // import './Controls.css'; // Removed for Tailwind migration
 
 interface ControlsProps {
@@ -22,6 +23,7 @@ export const Controls: React.FC<ControlsProps> = ({
   onForward,
   onToggleSize
 }) => {
+  const { t } = useTranslation();
   const formatTime = (time: number) => {
     if (isNaN(time)) return '00:00';
     const m = Math.floor(time / 60);
@@ -44,7 +46,7 @@ export const Controls: React.FC<ControlsProps> = ({
         <button
           className="text-slate-400 dark:text-slate-400 hover:text-[#646cff] dark:hover:text-[#a5b4fc] transition-colors p-2 rounded-full hover:bg-slate-50 dark:hover:bg-slate-700"
           onClick={onRewind}
-          title="快退 5 秒"
+          title={t('controls.rewind')}
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="11 19 2 12 11 5 11 19"></polygon><polygon points="22 19 13 12 22 5 22 19"></polygon></svg>
         </button>
@@ -52,7 +54,7 @@ export const Controls: React.FC<ControlsProps> = ({
         <button
           className="bg-[#646cff] text-white rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-[#535bf2] hover:scale-105 active:scale-95 transition-all outline-none dark:bg-[#535bf2] dark:hover:bg-[#4044c9]"
           onClick={onPlayPause}
-          title="播放 / 暂停"
+          title={t('shortcuts.playPause')}
         >
           {isPlaying ? (
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
@@ -64,7 +66,7 @@ export const Controls: React.FC<ControlsProps> = ({
         <button
           className="text-slate-400 dark:text-slate-400 hover:text-[#646cff] dark:hover:text-[#a5b4fc] transition-colors p-2 rounded-full hover:bg-slate-50 dark:hover:bg-slate-700"
           onClick={onForward}
-          title="快进 5 秒"
+          title={t('controls.forward')}
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 19 22 12 13 5 13 19"></polygon><polygon points="2 19 11 12 2 5 2 19"></polygon></svg>
         </button>
@@ -97,7 +99,7 @@ export const Controls: React.FC<ControlsProps> = ({
         <button
           className="text-slate-400 dark:text-slate-400 hover:text-[#646cff] dark:hover:text-[#a5b4fc] transition-colors p-1 rounded hover:bg-slate-50 dark:hover:bg-slate-700"
           onClick={onToggleSize}
-          title="调整大小"
+          title={t('controls.resize')}
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
         </button>

@@ -1,0 +1,45 @@
+{
+    "app": {
+        "title": "English Listening Trainer",
+        "copyright": "Copyright © 2026 English Listening Trainer. All rights reserved."
+    },
+    "settings": {
+        "title": "Settings",
+        "general": "General",
+        "shortcuts": "Shortcuts",
+        "language": "Language",
+        "reset": "Reset to Default",
+        "done": "Done",
+        "selectLanguage": "Select Language"
+    },
+    "shortcuts": {
+        "playPause": "Play / Pause",
+        "rewind": "Rewind (5s)",
+        "forward": "Forward (5s)",
+        "pressKey": "Press any key...",
+        "tooltip": "Shortcut Settings"
+    },
+    "controls": {
+        "play": "Play",
+        "pause": "Pause",
+        "rewind": "Rewind 5s",
+        "forward": "Forward 5s",
+        "resize": "Toggle Size"
+    },
+    "file": {
+        "select": "Select Audio/Video File",
+        "noFile": "No file selected",
+        "current": "File:"
+    },
+    "notes": {
+        "title": "Notes",
+        "import": "Import",
+        "downloadAndClear": "Download & Clear"
+    },
+    "timer": {
+        "today": "Study Time",
+        "start": "Start",
+        "pause": "Pause",
+        "reset": "Reset"
+    }
+}
