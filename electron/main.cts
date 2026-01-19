@@ -21,7 +21,13 @@ const createWindow = () => {
       webSecurity: false, // Helping with local file loading (video/audio)
       devTools: !app.isPackaged
     },
-    icon: path.join(__dirname, '../public/logo.png')
+    icon: path.join(__dirname, '../public/logo.png'),
+    show: false,
+    backgroundColor: '#f8fafc'
+  });
+
+  mainWindow.once('ready-to-show', () => {
+    mainWindow?.show();
   });
 
   mainWindow.maximize();
