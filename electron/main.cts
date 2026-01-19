@@ -25,6 +25,18 @@ const createWindow = () => {
 
   mainWindow.maximize();
 
+  mainWindow.webContents.setVisualZoomLevelLimits(1, 1);
+  mainWindow.webContents.on("before-input-event", (event, input) => {
+    if (input.control || input.meta) {
+      if (input.key.toLowerCase() === "r") {
+        event.preventDefault();
+      }
+      if (input.key === "=" || input.key === "-" || input.key === "0") {
+        event.preventDefault();
+      }
+    }
+  });
+
   if (process.env.VITE_DEV_SERVER_URL) {
     mainWindow.loadURL(process.env.VITE_DEV_SERVER_URL);
     mainWindow.webContents.openDevTools();

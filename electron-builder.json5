@@ -15,7 +15,7 @@
     "package.json"
   ],
   "mac": {
-    "icon": "public/logo.png",
+    "icon": "public/icon.icns",
     "target": [
       {
         "target": "dmg",
