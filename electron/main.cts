@@ -18,7 +18,8 @@ const createWindow = () => {
       preload: path.join(__dirname, 'preload.cjs'),
       nodeIntegration: true, // We might need this for some file access, or better use contextBridge
       contextIsolation: true,
-      webSecurity: false // Helping with local file loading (video/audio)
+      webSecurity: false, // Helping with local file loading (video/audio)
+      devTools: !app.isPackaged
     },
     icon: path.join(__dirname, '../public/logo.png')
   });
