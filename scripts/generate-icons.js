@@ -27,6 +27,8 @@ const sizes = [
     { name: 'icon_512x512@2x.png', size: 1024 },
 ];
 
+const PADDING_FACTOR = 0.8; // Image will be 80% of the total size (10% padding on each side)
+
 async function generate() {
     console.log('Loading source image...');
     const image = await Jimp.read(SOURCE);
@@ -34,40 +36,30 @@ async function generate() {
     for (const { name, size } of sizes) {
         console.log(`Generating ${name} (${size}x${size})...`);
 
-        // Clone image to avoid modifying source for each iteration
-        const icon = image.clone();
+        // Create a white canvas
+        const canvas = new Jimp({ width: size, height: size, color: 0xffffffff }); // White background
 
-        // Resize
-        icon.resize({ w: size, h: size });
+        // Resize source image
+        const iconContent = image.clone();
+        const contentSize = Math.round(size * PADDING_FACTOR);
+        iconContent.resize({ w: contentSize, h: contentSize });
 
-        // Apple "Squircle" doesn't have a constant radius, but ~22% is a good approximation for rounded rect
-        // However, to keep it simple and look decent, we will use a rounded corner mask.
-        // Creating a mask
+        // Composite content onto canvas (centered)
+        const offset = Math.round((size - contentSize) / 2);
+        canvas.composite(iconContent, offset, offset);
+
+        // Create a mask
         const mask = new Jimp({ width: size, height: size, color: 0x00000000 });
 
-        // Configurable radius. Apple uses approx 22% of icon size.
+        // Configurable radius. Apple uses approx 22.3% of icon size.
         const radius = Math.round(size * 0.223);
-
-        // Draw a rounded rectangle on the mask
-        // Since Jimp doesn't have native rounded rect drawing we have to use a composite trick or pixel manipulation
-        // Actually, creating a rounded rect mask manually in Jimp is verbose.
-        // Let's iterate pixels? No, too slow for JS.
-        // Let's use 'mask' with a generated shape? 
-        // We can verify if Jimp has a shape plugin? No.
-
-        // Simpler approach: 
-        // Just mask the corners.
-        // We can draw 4 circles at corners and 2 rectangles? No that's for drawing the shape.
-        // For masking: we encourage opaque where we want image, transparent where we don't.
-        // Wait, Jimp's mask method: "masks the image with another image. Average pixel intensity is used as the alpha."
-        // So we need a white rounded rect on black background.
 
         paintRoundedRect(mask, 0, 0, size, size, radius);
 
         // Apply mask
-        icon.mask(mask, 0, 0);
+        canvas.mask(mask, 0, 0);
 
-        await icon.write(path.join(DEST_DIR, name));
+        await canvas.write(path.join(DEST_DIR, name));
     }
     console.log('Done!');
 }
