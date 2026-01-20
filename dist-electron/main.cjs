@@ -19,11 +19,28 @@ const createWindow = () => {
             preload: path_1.default.join(__dirname, 'preload.cjs'),
             nodeIntegration: true, // We might need this for some file access, or better use contextBridge
             contextIsolation: true,
-            webSecurity: false // Helping with local file loading (video/audio)
+            webSecurity: false, // Helping with local file loading (video/audio)
+            devTools: !electron_1.app.isPackaged
         },
-        icon: path_1.default.join(__dirname, '../public/logo.png')
+        icon: path_1.default.join(__dirname, '../public/logo.png'),
+        show: false,
+        backgroundColor: '#f8fafc'
+    });
+    mainWindow.once('ready-to-show', () => {
+        mainWindow?.show();
     });
     mainWindow.maximize();
+    mainWindow.webContents.setVisualZoomLevelLimits(1, 1);
+    mainWindow.webContents.on("before-input-event", (event, input) => {
+        if (input.control || input.meta) {
+            if (input.key.toLowerCase() === "r") {
+                event.preventDefault();
+            }
+            if (input.key === "=" || input.key === "-" || input.key === "0") {
+                event.preventDefault();
+            }
+        }
+    });
     if (process.env.VITE_DEV_SERVER_URL) {
         mainWindow.loadURL(process.env.VITE_DEV_SERVER_URL);
         mainWindow.webContents.openDevTools();
