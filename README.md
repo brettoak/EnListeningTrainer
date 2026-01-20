@@ -4,6 +4,8 @@ A powerful, standalone desktop application designed to help you improve your Eng
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
+![App Screenshot](public/ui.png)
+
 ## 🌟 Features
 
 - **Advanced Media Player**
