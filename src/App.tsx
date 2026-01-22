@@ -7,6 +7,7 @@ import { NoteEditor } from './components/NoteEditor';
 import { ThemeProvider } from './context/ThemeContext';
 import { ThemeToggle } from './components/ThemeToggle';
 import { useShortcuts } from './hooks/useShortcuts';
+import { matchesShortcut } from './utils/keyboardUtils';
 import { Settings as SettingsModal } from './components/Settings';
 import { Settings } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -28,29 +29,71 @@ function AppContent() {
 
   useEffect(() => {
     // Keyboard shortcuts
+    // Keyboard shortcuts
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Avoid firing shortcuts when typing in inputs/textareas
-      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement || (e.target as HTMLElement).isContentEditable) {
-        return;
+      // Check for global shortcuts (works everywhere including inputs if modifiers are used)
+      // Check 1: Is user in an input/textarea/editor?
+      const isInput = e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement ||
+        (e.target as HTMLElement).isContentEditable;
+
+      let matched = false;
+
+      // Logic:
+      // If we are in an input, we ONLY allow shortcuts that match our config AND have modifiers.
+      // E.g. "Space" shouldn't trigger Play/Pause in editor. "Cmd+Space" should.
+      // If we are NOT in an input, anything goes (including simple "Space").
+
+      // Check configured shortcuts first
+      if (matchesShortcut(e, shortcuts.rewind)) {
+        // If in input, ensure it has modifiers to avoid blocking typing (e.g. valid text key)
+        // Actually `matchesShortcut` checks exact modifier match.
+        // If "ArrowLeft" is configured (no mod), and we are in input, we typically DO NOT want to trigger rewind.
+        // Unless user explicitly set "ArrowLeft" as shortcut? 
+        // Standard behavior: text inputs consume arrow keys.
+        // So if isInput && shortcut has NO modifiers -> Skip. 
+        // "Space" has no modifiers. "Cmd+Space" has modifiers.
+
+        const hasModifier = e.metaKey || e.ctrlKey || e.altKey;
+        if (!isInput || hasModifier) {
+          handleRewind();
+          matched = true;
+        }
+      }
+      else if (matchesShortcut(e, shortcuts.forward)) {
+        const hasModifier = e.metaKey || e.ctrlKey || e.altKey;
+        if (!isInput || hasModifier) {
+          handleForward();
+          matched = true;
+        }
+      }
+      else if (matchesShortcut(e, shortcuts.playPause)) {
+        const hasModifier = e.metaKey || e.ctrlKey || e.altKey;
+        if (!isInput || hasModifier) {
+          togglePlay();
+          matched = true;
+        }
       }
 
-      if (e.code === shortcuts.rewind) {
-        handleRewind();
-        e.preventDefault();
-      }
-      else if (e.code === shortcuts.forward) {
-        handleForward();
-        e.preventDefault();
-      }
-      else if (e.code === shortcuts.playPause) {
+      // Special Case: Space key when NOT in input (Convenience fallback)
+      // If user hasn't configured Space as the shortcut but presses Space outside editor, we often want to toggle play.
+      // This is the "separate space control" mentioned in requirements.
+      // If matched=true already, we don't need this.
+      if (!matched && !isInput && e.code === 'Space') {
+        // Only if it doesn't conflict with some other shortcut? 
+        // Play/Pause is the main one for Space.
         togglePlay();
+        matched = true;
+      }
+
+      if (matched) {
         e.preventDefault();
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isPlaying, shortcuts]);
+  }, [isPlaying, shortcuts, duration]); // Added duration dependency for forward logic
 
   const handleFileSelect = (selectedFile: File) => {
     setFile(selectedFile);

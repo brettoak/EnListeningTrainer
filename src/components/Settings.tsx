@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { type Shortcuts } from '../hooks/useShortcuts';
-import { X, Globe, Keyboard, Check } from 'lucide-react';
+import { getShortcutFromEvent, getDisplayString } from '../utils/keyboardUtils';
+import { X, Globe, Keyboard, Check, AlertTriangle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 interface SettingsProps {
@@ -27,7 +28,20 @@ export const Settings: React.FC<SettingsProps> = ({
             if (listeningFor) {
                 e.preventDefault();
                 e.stopPropagation();
-                onUpdate(listeningFor, e.code);
+
+                // Allow cancelling with Escape
+                if (e.key === 'Escape') {
+                    setListeningFor(null);
+                    return;
+                }
+
+                // Ignore modifier-only key presses
+                if (['Meta', 'Control', 'Alt', 'Shift'].includes(e.key)) {
+                    return;
+                }
+
+                const shortcutString = getShortcutFromEvent(e);
+                onUpdate(listeningFor, shortcutString);
                 setListeningFor(null);
             } else if (e.key === 'Escape' && isOpen) {
                 onClose();
@@ -48,13 +62,21 @@ export const Settings: React.FC<SettingsProps> = ({
         { key: 'forward', label: t('shortcuts.forward') },
     ];
 
-    const formatKey = (code: string) => {
-        if (code.startsWith('Key')) return code.slice(3);
-        if (code.startsWith('Digit')) return code.slice(5);
-        if (code.startsWith('Numpad')) return 'Num ' + code.slice(6);
-        if (code === 'Space') return 'Space';
-        return code;
+    // Check for potential system conflicts
+    const isSystemConflict = (code: string) => {
+        const lower = code.toLowerCase();
+        // Spotlight
+        if (lower === 'meta+space' || lower === 'cmd+space') return true;
+        // App Switcher (Browser usually handles, but strict warning is good)
+        if (lower === 'meta+tab' || lower === 'cmd+tab') return true;
+        // System Quit/Hide
+        if (lower === 'meta+q' || lower === 'cmd+q') return true;
+        if (lower === 'meta+h' || lower === 'cmd+h') return true;
+        if (lower === 'meta+w' || lower === 'cmd+w') return true;
+        return false;
     };
+
+
 
     const languages = [
         { code: 'en', label: 'English' },
@@ -70,8 +92,8 @@ export const Settings: React.FC<SettingsProps> = ({
                     <button
                         onClick={() => setActiveTab('general')}
                         className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'general'
-                                ? 'bg-white dark:bg-slate-800 text-[#646cff] shadow-sm'
-                                : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+                            ? 'bg-white dark:bg-slate-800 text-[#646cff] shadow-sm'
+                            : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
                             }`}
                     >
                         <Globe size={18} />
@@ -80,8 +102,8 @@ export const Settings: React.FC<SettingsProps> = ({
                     <button
                         onClick={() => setActiveTab('shortcuts')}
                         className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeTab === 'shortcuts'
-                                ? 'bg-white dark:bg-slate-800 text-[#646cff] shadow-sm'
-                                : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+                            ? 'bg-white dark:bg-slate-800 text-[#646cff] shadow-sm'
+                            : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
                             }`}
                     >
                         <Keyboard size={18} />
@@ -112,8 +134,8 @@ export const Settings: React.FC<SettingsProps> = ({
                                                 key={lang.code}
                                                 onClick={() => i18n.changeLanguage(lang.code)}
                                                 className={`flex items-center justify-between p-3 rounded-xl border transition-all ${i18n.language === lang.code
-                                                        ? 'border-[#646cff] bg-[#646cff]/5 text-[#646cff]'
-                                                        : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-700 dark:text-slate-300'
+                                                    ? 'border-[#646cff] bg-[#646cff]/5 text-[#646cff]'
+                                                    : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-700 dark:text-slate-300'
                                                     }`}
                                             >
                                                 <span className="font-medium">{lang.label}</span>
@@ -128,19 +150,27 @@ export const Settings: React.FC<SettingsProps> = ({
                         {activeTab === 'shortcuts' && (
                             <div className="flex flex-col gap-4">
                                 {actions.map(({ key, label }) => (
-                                    <div key={key} className="flex justify-between items-center bg-slate-50 dark:bg-slate-700/50 p-3 rounded-lg">
-                                        <span className="text-slate-600 dark:text-slate-300 font-medium">{label}</span>
-                                        <button
-                                            className={`px-4 py-2 rounded-lg font-mono text-sm border transition-all min-w-[120px] text-center
-                              ${listeningFor === key
-                                                    ? 'bg-[#646cff] border-[#646cff] text-white animate-pulse'
-                                                    : 'bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:border-[#646cff] dark:hover:border-[#535bf2]'
-                                                }
-                            `}
-                                            onClick={() => setListeningFor(key)}
-                                        >
-                                            {listeningFor === key ? t('shortcuts.pressKey') : formatKey(shortcuts[key])}
-                                        </button>
+                                    <div key={key} className="flex flex-col gap-2 bg-slate-50 dark:bg-slate-700/50 p-3 rounded-lg">
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-slate-600 dark:text-slate-300 font-medium">{label}</span>
+                                            <button
+                                                className={`px-4 py-2 rounded-lg font-mono text-sm border transition-all min-w-[120px] text-center
+                                  ${listeningFor === key
+                                                        ? 'bg-[#646cff] border-[#646cff] text-white animate-pulse'
+                                                        : 'bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:border-[#646cff] dark:hover:border-[#535bf2]'
+                                                    }
+                                `}
+                                                onClick={() => setListeningFor(key)}
+                                            >
+                                                {listeningFor === key ? t('shortcuts.pressKey') : getDisplayString(shortcuts[key])}
+                                            </button>
+                                        </div>
+                                        {isSystemConflict(shortcuts[key]) && (
+                                            <div className="flex items-start gap-2 text-amber-600 dark:text-amber-400 text-xs bg-amber-50 dark:bg-amber-900/20 p-2 rounded">
+                                                <AlertTriangle size={14} className="mt-0.5 shrink-0" />
+                                                <span>{t('shortcuts.systemConflictTip')}</span>
+                                            </div>
+                                        )}
                                     </div>
                                 ))}
 

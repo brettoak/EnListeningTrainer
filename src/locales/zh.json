@@ -17,7 +17,9 @@
         "rewind": "快退 (5秒)",
         "forward": "快进 (5秒)",
         "pressKey": "按任意键...",
-        "tooltip": "快捷键设置"
+        "tooltip": "快捷键设置",
+        "systemConflict": "系统冲突",
+        "systemConflictTip": "此快捷键被系统占用（如 Spotlight），可能无法生效，建议更换。"
     },
     "controls": {
         "play": "播放",

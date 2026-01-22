@@ -17,7 +17,9 @@
         "rewind": "Rewind (5s)",
         "forward": "Forward (5s)",
         "pressKey": "Press any key...",
-        "tooltip": "Shortcut Settings"
+        "tooltip": "Shortcut Settings",
+        "systemConflict": "System Conflict",
+        "systemConflictTip": "This shortcut is reserved by the system (e.g. Spotlight) and may not work."
     },
     "controls": {
         "play": "Play",
