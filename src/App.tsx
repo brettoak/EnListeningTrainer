@@ -7,6 +7,7 @@ import { NoteEditor } from './components/NoteEditor';
 import { ThemeProvider } from './context/ThemeContext';
 import { ThemeToggle } from './components/ThemeToggle';
 import { useShortcuts } from './hooks/useShortcuts';
+import { useSettings } from './hooks/useSettings';
 import { matchesShortcut } from './utils/keyboardUtils';
 import { Settings as SettingsModal } from './components/Settings';
 import { Settings } from 'lucide-react';
@@ -23,6 +24,7 @@ function AppContent() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const { shortcuts, updateShortcut, resetShortcuts } = useShortcuts();
+  const { settings, updateSetting } = useSettings();
 
   const mediaRef = useRef<HTMLMediaElement>(null);
   const fileSelectorRef = useRef<FileSelectorHandle>(null);
@@ -123,14 +125,14 @@ function AppContent() {
 
   const handleRewind = () => {
     if (mediaRef.current) {
-      const newTime = Math.max(0, mediaRef.current.currentTime - 5);
+      const newTime = Math.max(0, mediaRef.current.currentTime - settings.seekSeconds);
       mediaRef.current.currentTime = newTime;
     }
   };
 
   const handleForward = () => {
     if (mediaRef.current) {
-      const newTime = Math.min(duration || 0, mediaRef.current.currentTime + 5);
+      const newTime = Math.min((duration || 0), mediaRef.current.currentTime + settings.seekSeconds);
       mediaRef.current.currentTime = newTime;
     }
   };
@@ -207,6 +209,8 @@ function AppContent() {
         shortcuts={shortcuts}
         onUpdate={updateShortcut}
         onReset={resetShortcuts}
+        settings={settings}
+        onUpdateSetting={updateSetting}
       />
 
       <main className="flex-1 flex flex-col gap-6">

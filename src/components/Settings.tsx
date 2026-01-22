@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { type Shortcuts } from '../hooks/useShortcuts';
+import { type AppSettings } from '../hooks/useSettings';
 import { getShortcutFromEvent, getDisplayString } from '../utils/keyboardUtils';
 import { X, Globe, Keyboard, Check, AlertTriangle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +11,8 @@ interface SettingsProps {
     shortcuts: Shortcuts;
     onUpdate: (action: keyof Shortcuts, code: string) => void;
     onReset: () => void;
+    settings: AppSettings;
+    onUpdateSetting: <K extends keyof AppSettings>(key: K, value: AppSettings[K]) => void;
 }
 
 export const Settings: React.FC<SettingsProps> = ({
@@ -17,7 +20,9 @@ export const Settings: React.FC<SettingsProps> = ({
     onClose,
     shortcuts,
     onUpdate,
-    onReset
+    onReset,
+    settings,
+    onUpdateSetting
 }) => {
     const { t, i18n } = useTranslation();
     const [activeTab, setActiveTab] = useState<'general' | 'shortcuts'>('general');
@@ -142,6 +147,21 @@ export const Settings: React.FC<SettingsProps> = ({
                                                 {i18n.language === lang.code && <Check size={18} />}
                                             </button>
                                         ))}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h3 className="text-sm font-medium text-slate-700 dark:text-slate-200 mb-3">{t('settings.seekTime')}</h3>
+                                    <div className="flex items-center gap-4">
+                                        <input
+                                            type="number"
+                                            min={1}
+                                            max={60}
+                                            value={settings.seekSeconds}
+                                            onChange={(e) => onUpdateSetting('seekSeconds', Math.max(1, Math.min(60, parseInt(e.target.value) || 5)))}
+                                            className="w-24 p-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200"
+                                        />
+                                        <span className="text-sm text-slate-500 dark:text-slate-400">Seconds (1-60)</span>
                                     </div>
                                 </div>
                             </div>

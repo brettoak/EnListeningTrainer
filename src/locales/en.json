@@ -10,7 +10,8 @@
         "language": "Language",
         "reset": "Reset to Default",
         "done": "Done",
-        "selectLanguage": "Select Language"
+        "selectLanguage": "Select Language",
+        "seekTime": "Seek Time (seconds)"
     },
     "shortcuts": {
         "playPause": "Play / Pause",
